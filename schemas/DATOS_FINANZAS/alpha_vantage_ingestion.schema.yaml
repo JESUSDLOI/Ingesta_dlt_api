@@ -1,0 +1,973 @@
+version: 3
+version_hash: tt+S3r5axehxtNRKkv78Eki6mJ67y1arNzaCw79IlTA=
+engine_version: 10
+name: alpha_vantage_ingestion
+tables:
+  _dlt_version:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_name:
+        data_type: text
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: false
+      schema:
+        data_type: text
+        nullable: false
+    write_disposition: skip
+    resource: _dlt_version
+    description: Created by DLT. Tracks schema updates
+  _dlt_loads:
+    columns:
+      load_id:
+        data_type: text
+        nullable: false
+      schema_name:
+        data_type: text
+        nullable: true
+      status:
+        data_type: bigint
+        nullable: false
+      inserted_at:
+        data_type: timestamp
+        nullable: false
+      schema_version_hash:
+        data_type: text
+        nullable: true
+    write_disposition: skip
+    resource: _dlt_loads
+    description: Created by DLT. Tracks completed loads
+  empresa_data:
+    columns:
+      _dlt_valid_from:
+        data_type: timestamp
+        nullable: true
+        x-valid-from: true
+      _dlt_valid_to:
+        data_type: timestamp
+        nullable: true
+        x-valid-to: true
+        x-active-record-timestamp: null
+      symbol:
+        data_type: text
+        nullable: true
+      overview__symbol:
+        data_type: text
+        nullable: true
+      overview__asset_type:
+        data_type: text
+        nullable: true
+      overview__name:
+        data_type: text
+        nullable: true
+      overview__description:
+        data_type: text
+        nullable: true
+      overview__cik:
+        data_type: text
+        nullable: true
+      overview__exchange:
+        data_type: text
+        nullable: true
+      overview__currency:
+        data_type: text
+        nullable: true
+      overview__country:
+        data_type: text
+        nullable: true
+      overview__sector:
+        data_type: text
+        nullable: true
+      overview__industry:
+        data_type: text
+        nullable: true
+      overview__address:
+        data_type: text
+        nullable: true
+      overview__official_site:
+        data_type: text
+        nullable: true
+      overview__fiscal_year_end:
+        data_type: text
+        nullable: true
+      overview__latest_quarter:
+        data_type: text
+        nullable: true
+      overview__market_capitalization:
+        data_type: text
+        nullable: true
+      overview__ebitda:
+        data_type: text
+        nullable: true
+      overview__pe_ratio:
+        data_type: text
+        nullable: true
+      overview__peg_ratio:
+        data_type: text
+        nullable: true
+      overview__book_value:
+        data_type: text
+        nullable: true
+      overview__dividend_per_share:
+        data_type: text
+        nullable: true
+      overview__dividend_yield:
+        data_type: text
+        nullable: true
+      overview__eps:
+        data_type: text
+        nullable: true
+      overview__revenue_per_share_ttm:
+        data_type: text
+        nullable: true
+      overview__profit_margin:
+        data_type: text
+        nullable: true
+      overview__operating_margin_ttm:
+        data_type: text
+        nullable: true
+      overview__return_on_assets_ttm:
+        data_type: text
+        nullable: true
+      overview__return_on_equity_ttm:
+        data_type: text
+        nullable: true
+      overview__revenue_ttm:
+        data_type: text
+        nullable: true
+      overview__gross_profit_ttm:
+        data_type: text
+        nullable: true
+      overview__diluted_epsttm:
+        data_type: text
+        nullable: true
+      overview__quarterly_earnings_growth_yoy:
+        data_type: text
+        nullable: true
+      overview__quarterly_revenue_growth_yoy:
+        data_type: text
+        nullable: true
+      overview__analyst_target_price:
+        data_type: text
+        nullable: true
+      overview__analyst_rating_strong_buy:
+        data_type: text
+        nullable: true
+      overview__analyst_rating_buy:
+        data_type: text
+        nullable: true
+      overview__analyst_rating_hold:
+        data_type: text
+        nullable: true
+      overview__analyst_rating_sell:
+        data_type: text
+        nullable: true
+      overview__analyst_rating_strong_sell:
+        data_type: text
+        nullable: true
+      overview__trailing_pe:
+        data_type: text
+        nullable: true
+      overview__forward_pe:
+        data_type: text
+        nullable: true
+      overview__price_to_sales_ratio_ttm:
+        data_type: text
+        nullable: true
+      overview__price_to_book_ratio:
+        data_type: text
+        nullable: true
+      overview__ev_to_revenue:
+        data_type: text
+        nullable: true
+      overview__ev_to_ebitda:
+        data_type: text
+        nullable: true
+      overview__beta:
+        data_type: text
+        nullable: true
+      overview___52_week_high:
+        data_type: text
+        nullable: true
+      overview___52_week_low:
+        data_type: text
+        nullable: true
+      overview___50_day_moving_average:
+        data_type: text
+        nullable: true
+      overview___200_day_moving_average:
+        data_type: text
+        nullable: true
+      overview__shares_outstanding:
+        data_type: text
+        nullable: true
+      overview__dividend_date:
+        data_type: text
+        nullable: true
+      overview__ex_dividend_date:
+        data_type: text
+        nullable: true
+      balance_sheet__symbol:
+        data_type: text
+        nullable: true
+      income_statement__symbol:
+        data_type: text
+        nullable: true
+      cash_flow__symbol:
+        data_type: text
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        nullable: false
+        x-row-version: true
+        unique: false
+        row_key: false
+        data_type: text
+    x-merge-strategy: scd2
+    write_disposition: merge
+    resource: obtener_datos_empresas
+  _dlt_pipeline_state:
+    columns:
+      version:
+        data_type: bigint
+        nullable: false
+      engine_version:
+        data_type: bigint
+        nullable: false
+      pipeline_name:
+        data_type: text
+        nullable: false
+      state:
+        data_type: text
+        nullable: false
+      created_at:
+        data_type: timestamp
+        nullable: false
+      version_hash:
+        data_type: text
+        nullable: true
+      _dlt_load_id:
+        data_type: text
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    write_disposition: append
+    file_format: preferred
+    resource: _dlt_pipeline_state
+  empresa_data__balance_sheet__annual_reports:
+    columns:
+      fiscal_date_ending:
+        data_type: text
+        nullable: true
+      reported_currency:
+        data_type: text
+        nullable: true
+      total_assets:
+        data_type: text
+        nullable: true
+      total_current_assets:
+        data_type: text
+        nullable: true
+      cash_and_cash_equivalents_at_carrying_value:
+        data_type: text
+        nullable: true
+      cash_and_short_term_investments:
+        data_type: text
+        nullable: true
+      inventory:
+        data_type: text
+        nullable: true
+      current_net_receivables:
+        data_type: text
+        nullable: true
+      total_non_current_assets:
+        data_type: text
+        nullable: true
+      property_plant_equipment:
+        data_type: text
+        nullable: true
+      accumulated_depreciation_amortization_ppe:
+        data_type: text
+        nullable: true
+      intangible_assets:
+        data_type: text
+        nullable: true
+      intangible_assets_excluding_goodwill:
+        data_type: text
+        nullable: true
+      goodwill:
+        data_type: text
+        nullable: true
+      investments:
+        data_type: text
+        nullable: true
+      long_term_investments:
+        data_type: text
+        nullable: true
+      short_term_investments:
+        data_type: text
+        nullable: true
+      other_current_assets:
+        data_type: text
+        nullable: true
+      other_non_current_assets:
+        data_type: text
+        nullable: true
+      total_liabilities:
+        data_type: text
+        nullable: true
+      total_current_liabilities:
+        data_type: text
+        nullable: true
+      current_accounts_payable:
+        data_type: text
+        nullable: true
+      deferred_revenue:
+        data_type: text
+        nullable: true
+      current_debt:
+        data_type: text
+        nullable: true
+      short_term_debt:
+        data_type: text
+        nullable: true
+      total_non_current_liabilities:
+        data_type: text
+        nullable: true
+      capital_lease_obligations:
+        data_type: text
+        nullable: true
+      long_term_debt:
+        data_type: text
+        nullable: true
+      current_long_term_debt:
+        data_type: text
+        nullable: true
+      long_term_debt_noncurrent:
+        data_type: text
+        nullable: true
+      short_long_term_debt_total:
+        data_type: text
+        nullable: true
+      other_current_liabilities:
+        data_type: text
+        nullable: true
+      other_non_current_liabilities:
+        data_type: text
+        nullable: true
+      total_shareholder_equity:
+        data_type: text
+        nullable: true
+      treasury_stock:
+        data_type: text
+        nullable: true
+      retained_earnings:
+        data_type: text
+        nullable: true
+      common_stock:
+        data_type: text
+        nullable: true
+      common_stock_shares_outstanding:
+        data_type: text
+        nullable: true
+      _dlt_root_id:
+        data_type: text
+        nullable: false
+        root_key: true
+      _dlt_parent_id:
+        data_type: text
+        nullable: false
+        parent_key: true
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    parent: empresa_data
+  empresa_data__balance_sheet__quarterly_reports:
+    columns:
+      fiscal_date_ending:
+        data_type: text
+        nullable: true
+      reported_currency:
+        data_type: text
+        nullable: true
+      total_assets:
+        data_type: text
+        nullable: true
+      total_current_assets:
+        data_type: text
+        nullable: true
+      cash_and_cash_equivalents_at_carrying_value:
+        data_type: text
+        nullable: true
+      cash_and_short_term_investments:
+        data_type: text
+        nullable: true
+      inventory:
+        data_type: text
+        nullable: true
+      current_net_receivables:
+        data_type: text
+        nullable: true
+      total_non_current_assets:
+        data_type: text
+        nullable: true
+      property_plant_equipment:
+        data_type: text
+        nullable: true
+      accumulated_depreciation_amortization_ppe:
+        data_type: text
+        nullable: true
+      intangible_assets:
+        data_type: text
+        nullable: true
+      intangible_assets_excluding_goodwill:
+        data_type: text
+        nullable: true
+      goodwill:
+        data_type: text
+        nullable: true
+      investments:
+        data_type: text
+        nullable: true
+      long_term_investments:
+        data_type: text
+        nullable: true
+      short_term_investments:
+        data_type: text
+        nullable: true
+      other_current_assets:
+        data_type: text
+        nullable: true
+      other_non_current_assets:
+        data_type: text
+        nullable: true
+      total_liabilities:
+        data_type: text
+        nullable: true
+      total_current_liabilities:
+        data_type: text
+        nullable: true
+      current_accounts_payable:
+        data_type: text
+        nullable: true
+      deferred_revenue:
+        data_type: text
+        nullable: true
+      current_debt:
+        data_type: text
+        nullable: true
+      short_term_debt:
+        data_type: text
+        nullable: true
+      total_non_current_liabilities:
+        data_type: text
+        nullable: true
+      capital_lease_obligations:
+        data_type: text
+        nullable: true
+      long_term_debt:
+        data_type: text
+        nullable: true
+      current_long_term_debt:
+        data_type: text
+        nullable: true
+      long_term_debt_noncurrent:
+        data_type: text
+        nullable: true
+      short_long_term_debt_total:
+        data_type: text
+        nullable: true
+      other_current_liabilities:
+        data_type: text
+        nullable: true
+      other_non_current_liabilities:
+        data_type: text
+        nullable: true
+      total_shareholder_equity:
+        data_type: text
+        nullable: true
+      treasury_stock:
+        data_type: text
+        nullable: true
+      retained_earnings:
+        data_type: text
+        nullable: true
+      common_stock:
+        data_type: text
+        nullable: true
+      common_stock_shares_outstanding:
+        data_type: text
+        nullable: true
+      _dlt_root_id:
+        data_type: text
+        nullable: false
+        root_key: true
+      _dlt_parent_id:
+        data_type: text
+        nullable: false
+        parent_key: true
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    parent: empresa_data
+  empresa_data__income_statement__annual_reports:
+    columns:
+      fiscal_date_ending:
+        data_type: text
+        nullable: true
+      reported_currency:
+        data_type: text
+        nullable: true
+      gross_profit:
+        data_type: text
+        nullable: true
+      total_revenue:
+        data_type: text
+        nullable: true
+      cost_of_revenue:
+        data_type: text
+        nullable: true
+      costof_goods_and_services_sold:
+        data_type: text
+        nullable: true
+      operating_income:
+        data_type: text
+        nullable: true
+      selling_general_and_administrative:
+        data_type: text
+        nullable: true
+      research_and_development:
+        data_type: text
+        nullable: true
+      operating_expenses:
+        data_type: text
+        nullable: true
+      investment_income_net:
+        data_type: text
+        nullable: true
+      net_interest_income:
+        data_type: text
+        nullable: true
+      interest_income:
+        data_type: text
+        nullable: true
+      interest_expense:
+        data_type: text
+        nullable: true
+      non_interest_income:
+        data_type: text
+        nullable: true
+      other_non_operating_income:
+        data_type: text
+        nullable: true
+      depreciation:
+        data_type: text
+        nullable: true
+      depreciation_and_amortization:
+        data_type: text
+        nullable: true
+      income_before_tax:
+        data_type: text
+        nullable: true
+      income_tax_expense:
+        data_type: text
+        nullable: true
+      interest_and_debt_expense:
+        data_type: text
+        nullable: true
+      net_income_from_continuing_operations:
+        data_type: text
+        nullable: true
+      comprehensive_income_net_of_tax:
+        data_type: text
+        nullable: true
+      ebit:
+        data_type: text
+        nullable: true
+      ebitda:
+        data_type: text
+        nullable: true
+      net_income:
+        data_type: text
+        nullable: true
+      _dlt_root_id:
+        data_type: text
+        nullable: false
+        root_key: true
+      _dlt_parent_id:
+        data_type: text
+        nullable: false
+        parent_key: true
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    parent: empresa_data
+  empresa_data__income_statement__quarterly_reports:
+    columns:
+      fiscal_date_ending:
+        data_type: text
+        nullable: true
+      reported_currency:
+        data_type: text
+        nullable: true
+      gross_profit:
+        data_type: text
+        nullable: true
+      total_revenue:
+        data_type: text
+        nullable: true
+      cost_of_revenue:
+        data_type: text
+        nullable: true
+      costof_goods_and_services_sold:
+        data_type: text
+        nullable: true
+      operating_income:
+        data_type: text
+        nullable: true
+      selling_general_and_administrative:
+        data_type: text
+        nullable: true
+      research_and_development:
+        data_type: text
+        nullable: true
+      operating_expenses:
+        data_type: text
+        nullable: true
+      investment_income_net:
+        data_type: text
+        nullable: true
+      net_interest_income:
+        data_type: text
+        nullable: true
+      interest_income:
+        data_type: text
+        nullable: true
+      interest_expense:
+        data_type: text
+        nullable: true
+      non_interest_income:
+        data_type: text
+        nullable: true
+      other_non_operating_income:
+        data_type: text
+        nullable: true
+      depreciation:
+        data_type: text
+        nullable: true
+      depreciation_and_amortization:
+        data_type: text
+        nullable: true
+      income_before_tax:
+        data_type: text
+        nullable: true
+      income_tax_expense:
+        data_type: text
+        nullable: true
+      interest_and_debt_expense:
+        data_type: text
+        nullable: true
+      net_income_from_continuing_operations:
+        data_type: text
+        nullable: true
+      comprehensive_income_net_of_tax:
+        data_type: text
+        nullable: true
+      ebit:
+        data_type: text
+        nullable: true
+      ebitda:
+        data_type: text
+        nullable: true
+      net_income:
+        data_type: text
+        nullable: true
+      _dlt_root_id:
+        data_type: text
+        nullable: false
+        root_key: true
+      _dlt_parent_id:
+        data_type: text
+        nullable: false
+        parent_key: true
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    parent: empresa_data
+  empresa_data__cash_flow__annual_reports:
+    columns:
+      fiscal_date_ending:
+        data_type: text
+        nullable: true
+      reported_currency:
+        data_type: text
+        nullable: true
+      operating_cashflow:
+        data_type: text
+        nullable: true
+      payments_for_operating_activities:
+        data_type: text
+        nullable: true
+      proceeds_from_operating_activities:
+        data_type: text
+        nullable: true
+      change_in_operating_liabilities:
+        data_type: text
+        nullable: true
+      change_in_operating_assets:
+        data_type: text
+        nullable: true
+      depreciation_depletion_and_amortization:
+        data_type: text
+        nullable: true
+      capital_expenditures:
+        data_type: text
+        nullable: true
+      change_in_receivables:
+        data_type: text
+        nullable: true
+      change_in_inventory:
+        data_type: text
+        nullable: true
+      profit_loss:
+        data_type: text
+        nullable: true
+      cashflow_from_investment:
+        data_type: text
+        nullable: true
+      cashflow_from_financing:
+        data_type: text
+        nullable: true
+      proceeds_from_repayments_of_short_term_debt:
+        data_type: text
+        nullable: true
+      payments_for_repurchase_of_common_stock:
+        data_type: text
+        nullable: true
+      payments_for_repurchase_of_equity:
+        data_type: text
+        nullable: true
+      payments_for_repurchase_of_preferred_stock:
+        data_type: text
+        nullable: true
+      dividend_payout:
+        data_type: text
+        nullable: true
+      dividend_payout_common_stock:
+        data_type: text
+        nullable: true
+      dividend_payout_preferred_stock:
+        data_type: text
+        nullable: true
+      proceeds_from_issuance_of_common_stock:
+        data_type: text
+        nullable: true
+      proceeds_from_issuance_of_long_term_debt_and_capital_securities_net:
+        data_type: text
+        nullable: true
+      proceeds_from_issuance_of_preferred_stock:
+        data_type: text
+        nullable: true
+      proceeds_from_repurchase_of_equity:
+        data_type: text
+        nullable: true
+      proceeds_from_sale_of_treasury_stock:
+        data_type: text
+        nullable: true
+      change_in_cash_and_cash_equivalents:
+        data_type: text
+        nullable: true
+      change_in_exchange_rate:
+        data_type: text
+        nullable: true
+      net_income:
+        data_type: text
+        nullable: true
+      _dlt_root_id:
+        data_type: text
+        nullable: false
+        root_key: true
+      _dlt_parent_id:
+        data_type: text
+        nullable: false
+        parent_key: true
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    parent: empresa_data
+  empresa_data__cash_flow__quarterly_reports:
+    columns:
+      fiscal_date_ending:
+        data_type: text
+        nullable: true
+      reported_currency:
+        data_type: text
+        nullable: true
+      operating_cashflow:
+        data_type: text
+        nullable: true
+      payments_for_operating_activities:
+        data_type: text
+        nullable: true
+      proceeds_from_operating_activities:
+        data_type: text
+        nullable: true
+      change_in_operating_liabilities:
+        data_type: text
+        nullable: true
+      change_in_operating_assets:
+        data_type: text
+        nullable: true
+      depreciation_depletion_and_amortization:
+        data_type: text
+        nullable: true
+      capital_expenditures:
+        data_type: text
+        nullable: true
+      change_in_receivables:
+        data_type: text
+        nullable: true
+      change_in_inventory:
+        data_type: text
+        nullable: true
+      profit_loss:
+        data_type: text
+        nullable: true
+      cashflow_from_investment:
+        data_type: text
+        nullable: true
+      cashflow_from_financing:
+        data_type: text
+        nullable: true
+      proceeds_from_repayments_of_short_term_debt:
+        data_type: text
+        nullable: true
+      payments_for_repurchase_of_common_stock:
+        data_type: text
+        nullable: true
+      payments_for_repurchase_of_equity:
+        data_type: text
+        nullable: true
+      payments_for_repurchase_of_preferred_stock:
+        data_type: text
+        nullable: true
+      dividend_payout:
+        data_type: text
+        nullable: true
+      dividend_payout_common_stock:
+        data_type: text
+        nullable: true
+      dividend_payout_preferred_stock:
+        data_type: text
+        nullable: true
+      proceeds_from_issuance_of_common_stock:
+        data_type: text
+        nullable: true
+      proceeds_from_issuance_of_long_term_debt_and_capital_securities_net:
+        data_type: text
+        nullable: true
+      proceeds_from_issuance_of_preferred_stock:
+        data_type: text
+        nullable: true
+      proceeds_from_repurchase_of_equity:
+        data_type: text
+        nullable: true
+      proceeds_from_sale_of_treasury_stock:
+        data_type: text
+        nullable: true
+      change_in_cash_and_cash_equivalents:
+        data_type: text
+        nullable: true
+      change_in_exchange_rate:
+        data_type: text
+        nullable: true
+      net_income:
+        data_type: text
+        nullable: true
+      _dlt_root_id:
+        data_type: text
+        nullable: false
+        root_key: true
+      _dlt_parent_id:
+        data_type: text
+        nullable: false
+        parent_key: true
+      _dlt_list_idx:
+        data_type: bigint
+        nullable: false
+      _dlt_id:
+        data_type: text
+        nullable: false
+        unique: true
+        row_key: true
+    parent: empresa_data
+settings:
+  detections:
+  - iso_timestamp
+  default_hints:
+    not_null:
+    - _dlt_id
+    - _dlt_root_id
+    - _dlt_parent_id
+    - _dlt_list_idx
+    - _dlt_load_id
+    parent_key:
+    - _dlt_parent_id
+    root_key:
+    - _dlt_root_id
+    unique:
+    - _dlt_id
+    row_key:
+    - _dlt_id
+normalizers:
+  names: snake_case
+  json:
+    module: dlt.common.normalizers.json.relational
+    config:
+      propagation:
+        tables:
+          empresa_data:
+            _dlt_id: _dlt_root_id
+previous_hashes:
+- jLid1PhmevpcmGeZ2y3+iUl3+RYxRW3DAo3vLs0w2K4=
+- juEunZQmgv4nzZ2ghNWHmSHHyKML2hvk9njwQkZ19DQ=
+- q4ArwTfxo8J99Xaufvs3fpYtOZ+2IBRrziGeOW93NRo=

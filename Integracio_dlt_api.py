@@ -3,7 +3,10 @@ import requests
 from typing import List, Dict
 
 # Configuración de Snowflake
-@dlt.resource(table_name="empresa_data", write_disposition="append")
+@dlt.resource(parallelized=True ,table_name="empresa_data", write_disposition={"disposition": "merge", "strategy": "scd2"})
+#@dlt.resource(table_name="empresa_data", write_disposition='append')
+
+#Función para obtener datos de empresas
 def obtener_datos_empresas(api_key: str) -> List[Dict]:
     """
     Obtiene datos financieros de las principales empresas en el ETF del S&P 500 usando Alpha Vantage.
@@ -86,9 +89,10 @@ def agregar_symbol_a_datos(symbol: str, data: Dict) -> Dict:
 
 # Crear el pipeline de DLT
 pipeline = dlt.pipeline(
+    import_schema_path="schemas/DATOS_FINANZAS",
     pipeline_name="alpha_vantage_ingestion",
     destination="snowflake",
-    dataset_name="Datos_prueba_finanzas"
+    dataset_name="Datos_finanzas"
 )
 
 # Ingestar datos al pipeline
@@ -97,7 +101,7 @@ def run_pipeline():
     Ejecuta el pipeline para obtener datos de empresas y cargarlos en Snowflake.
     """
     try:
-        load_info = pipeline.run(obtener_datos_empresas(api_key="F3H45RHRA3GMY255"))
+        load_info = pipeline.run(obtener_datos_empresas(api_key="8XIKTJXHEGE7W9YJ"))
         print(f"Ingesta completada con éxito: {load_info}")
     except Exception as e:
         print(f"Error al ejecutar el pipeline: {e}")
