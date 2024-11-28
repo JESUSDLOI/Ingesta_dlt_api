@@ -3,8 +3,8 @@ import requests
 from typing import List, Dict
 
 # Configuración de Snowflake
-@dlt.resource(parallelized=True ,table_name="empresa_data", write_disposition={"disposition": "merge", "strategy": "scd2"})
-#@dlt.resource(table_name="empresa_data", write_disposition='append')
+#@dlt.resource(parallelized=True ,table_name="empresa_data", write_disposition={"disposition": "merge", "strategy": "scd2"})
+@dlt.resource(table_name="empresa_data", write_disposition='append')
 
 #Función para obtener datos de empresas
 def obtener_datos_empresas(api_key: str) -> List[Dict]:
