@@ -31,7 +31,7 @@ def obtener_datos_empresas(api_key: str, fecha_ingesta: datetime) -> List[Dict]:
 
         # Extraer símbolos de las cinco primeras empresas
         nombres_empresas = [item['symbol'] for item in holdings_data if 'symbol' in item and item['symbol'] != 'n/a']
-        primeras_cinco_empresas = nombres_empresas[0:5]
+        primeras_cinco_empresas = nombres_empresas[5:10]
 
 
         # Iterar sobre los nombres de las empresas y hacer solicitudes para cada una
@@ -101,7 +101,7 @@ def run_pipeline():
     """
     try:
         fecha_ingesta = datetime.now().isoformat()
-        api_key="XGZ8A5CYO2WO86AO"
+        api_key="WX5LRHH0MMDEIZOE"
         load_info = pipeline.run(obtener_datos_empresas(api_key, fecha_ingesta))
         print(f"Ingesta completada con éxito: {load_info}")
     except Exception as e:
@@ -109,3 +109,7 @@ def run_pipeline():
 
 if __name__ == "__main__":
     run_pipeline()
+
+
+#XGZ8A5CYO2WO86AO
+#WX5LRHH0MMDEIZOE 
