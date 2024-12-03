@@ -31,7 +31,7 @@ def obtener_datos_empresas(api_key: str, fecha_ingesta: datetime) -> List[Dict]:
 
         # Extraer símbolos de las cinco primeras empresas
         nombres_empresas = [item['symbol'] for item in holdings_data if 'symbol' in item and item['symbol'] != 'n/a']
-        primeras_cinco_empresas = nombres_empresas[5:10]
+        primeras_cinco_empresas = nombres_empresas[10:15]
 
 
         # Iterar sobre los nombres de las empresas y hacer solicitudes para cada una
